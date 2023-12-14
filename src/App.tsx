@@ -1,14 +1,31 @@
-import { useState } from "react";
 import "./App.css";
+import { Container, Stack, Typography } from "@mui/material";
+import { JavaScriptLogo } from "./JavaScriptLogo";
+import { Start } from "./Start";
+import { useQuestionStore } from "./store/questions";
+import { Game } from "./Game";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const questions = useQuestionStore((state) => state.questions);
 
   return (
     <main>
-      <div>
-        <h1>Javascript Quizz</h1>
-      </div>
+      <Container maxWidth="sm">
+        <Stack
+          direction="row"
+          gap={2}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <JavaScriptLogo />
+          <Typography variant="h2" component="h1">
+            JavaScript Quizz
+          </Typography>
+        </Stack>
+
+        {questions.length === 0 && <Start />}
+        {questions.length > 0 && <Game />}
+      </Container>
     </main>
   );
 }
